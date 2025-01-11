@@ -5,7 +5,7 @@ import time
 
 
 url = ""  # The URL you want to target
-max_threads = 10  # Maximum threads
+max_threads = 100  # Maximum threads
 
 # Wolfkurd's personal touch
 ascii_art = """
@@ -78,6 +78,7 @@ def main():
                 executor.submit(send_request, url)
             except Exception as e:
                 print(f"⚠️ Oops! Something exploded. An error occurred: {e} ⚠️")
+            time.sleep(0.6)
 
 if __name__ == '__main__':
     main()

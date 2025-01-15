@@ -3226,7 +3226,7 @@ def send_request(url):
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
         'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.7',
-        'Keep-Alive': random.randint(110,160),
+        'Keep-Alive': str(random.randint(110, 160)),
         'Referer': random.choice(headers_referers)
     }
     try:
